@@ -1,6 +1,6 @@
-﻿#README
-**Name: Xinyu Fu**
-**Email: 247047@niuitmo.ru**
+﻿#README  
+**Name: Xinyu Fu**  
+**Email: 247047@niuitmo.ru**  
 
 
 
