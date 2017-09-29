@@ -1,0 +1,30 @@
+html {
+	margin: auto 40px;
+}
+
+body {
+	width: 960px;
+}
+
+h1 {
+	color: #1946ba;
+
+	}
+h2 {
+	padding: 8px;
+	border: 2px solid #f5f5f5;
+}
+blockquote {
+	font-family: 'Open Sans', sans-serif;
+	color: gray;
+	font-size: 16px;
+	border-left: 2px solid gray;
+	padding: 0 0 0 8px;
+}
+
+button {
+	background-color: #ec0b43;
+	border: 0px;	
+	color: white;
+	padding: 10px 10px 10px 10px;
+}
