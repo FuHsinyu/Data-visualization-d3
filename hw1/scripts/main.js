@@ -38,4 +38,7 @@ myButton2.onclick = function() {
     }
   }
 }
+
+//var json = require('../json/quotes.json');
+//import langsData from 'C:\Users\admin\OneDrive\git\Hsinyu.github.io\hw1\json\quotes.json.txt'
     
