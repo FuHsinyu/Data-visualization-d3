@@ -6,6 +6,7 @@ var tmp;
 var tmpQuote;
 var quoteId = new Array(8);
 var quote = new Array(8);
+
 //Change the Quote of the Day randomly
 myButton.onclick = function() {
 	 var myQuote;
