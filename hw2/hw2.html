@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>World Countries Ranking</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <label>Time Update: </label>1995
+    <input type="range" name="points" min="1995" max="2012" value="2000" class="slider" id="myRange">
+    <label>2012</label> Year:
+    <span id="year"></span>
+    <br>
+
+    <label>Filter by: </label>
+    <input type="checkbox" class="continent" value="Americas"> Americas
+    <input type="checkbox" class="continent" value="Africa"> Africa
+    <input type="checkbox" class="continent" value="Asia"> Asia
+    <input type="checkbox" class="continent" value="Europe"> Europe
+    <input type="checkbox" class="continent" value="Oceania"> Oceania
+    <br>
+
+    <label>Aggregation: </label>
+    <input type="radio" name="None" value="1" onclick="none()"> None
+    <input type="radio" name="Continent" value="2" onclick="continentSort()"> by Continent
+
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="scripts/main.js"></script>
+
+</body>
+
+</html>

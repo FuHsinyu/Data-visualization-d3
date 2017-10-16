@@ -1,0 +1,42 @@
+body {
+    font-weight: 300;
+    padding: 20px;
+}
+
+table {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-color: grey;
+}
+
+.slider {
+    width: 400px
+}
+
+caption {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+th {
+    text-align: left;
+    background-color: white
+}
+
+th,
+td {
+    padding: 0 1em 1.5ex 0.5ex;
+    border: 1px solid gray;
+    text-align: center;
+}
+
+th.center,
+td.center {
+    text-align: center;
+}
+
+th.num,
+td.num {
+    text-align: right;
+}
