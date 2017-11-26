@@ -13,12 +13,10 @@ class VotePercentageChart {
     };
     let divvotesPercentage = d3.select("#votes-percentage").classed("content", true);
 
-    //fetch the svg bounds
     this.svgBounds = divvotesPercentage.node().getBoundingClientRect();
     this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
     this.svgHeight = 200;
 
-    //add the svg to the div
     this.svg = divvotesPercentage.append("svg")
       .attr("width", this.svgWidth)
       .attr("height", this.svgHeight)
@@ -50,20 +48,20 @@ class VotePercentageChart {
     d3.select("#votePercentageArea").remove();
 
     var data = [{
-        votePercent: electionResult[0].I_PopularPercentage.length > 0 ? electionResult[0].I_PopularPercentage.slice(0, -1) : 0,
-        nominee: electionResult[0].I_Nominee_prop,
-        party: "I"
-      },
-      {
-        votePercent: electionResult[0].D_PopularPercentage.length > 0 ? electionResult[0].D_PopularPercentage.slice(0, -1) : 0,
-        nominee: electionResult[0].D_Nominee_prop,
-        party: "D"
-      },
-      {
-        votePercent: electionResult[0].R_PopularPercentage.length > 0 ? electionResult[0].R_PopularPercentage.slice(0, -1) : 0,
-        nominee: electionResult[0].R_Nominee_prop,
-        party: "R"
-      },
+      votePercent: electionResult[0].I_PopularPercentage.length > 0 ? electionResult[0].I_PopularPercentage.slice(0, -1) : 0,
+      nominee: electionResult[0].I_Nominee_prop,
+      party: "I"
+    },
+    {
+      votePercent: electionResult[0].D_PopularPercentage.length > 0 ? electionResult[0].D_PopularPercentage.slice(0, -1) : 0,
+      nominee: electionResult[0].D_Nominee_prop,
+      party: "D"
+    },
+    {
+      votePercent: electionResult[0].R_PopularPercentage.length > 0 ? electionResult[0].R_PopularPercentage.slice(0, -1) : 0,
+      nominee: electionResult[0].R_Nominee_prop,
+      party: "R"
+    },
     ];
 
     var self = this;
@@ -77,17 +75,17 @@ class VotePercentageChart {
     var perc_so_far = 0;
 
     bar.append("rect")
-      .attr("width", function(d) {
+      .attr("width", function (d) {
         return d.votePercent + "%";
       })
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         var prev_perc = perc_so_far;
         var this_perc = d.votePercent;
         perc_so_far = parseFloat(perc_so_far) + parseFloat(this_perc);
         return prev_perc + "%";
       })
       .attr("transform", " translate(50,100)")
-      .attr("class", function(d) {
+      .attr("class", function (d) {
         return self.chooseClass(d.party);
       })
       .attr("height", 40)
@@ -103,10 +101,10 @@ class VotePercentageChart {
 
     var prev = 0;
     bar.append("text")
-      .text(function(d) {
+      .text(function (d) {
         return d.votePercent == 0 ? "" : d.votePercent + "%";
       })
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         if (d.party == "I") {
           prev = parseFloat(d.votePercent);
           return 0 + "%"
@@ -125,10 +123,10 @@ class VotePercentageChart {
 
     prev = 0;
     bar.append("text")
-      .text(function(d) {
+      .text(function (d) {
         return d.nominee;
       })
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         if (d.party == "I") {
           prev = parseFloat(d.votePercent);
           return 0 + "%"
@@ -136,7 +134,7 @@ class VotePercentageChart {
           if (prev == 0) {
             return 0 + "%";
           }
-          return (parseFloat(d.votePercent) + prev) / 2.5  + "%";
+          return (parseFloat(d.votePercent) + prev) / 2.5 + "%";
         } else {
           return 93 + "%";
         }
@@ -146,9 +144,9 @@ class VotePercentageChart {
       .classed("votesPercentageText", true);
 
     bar.selectAll(".votesPercentageText")
-    .attr("class", function(d) {
-      return self.chooseClass(d.party);
-    });
+      .attr("class", function (d) {
+        return self.chooseClass(d.party);
+      });
 
 
     this.svg.select("#votePercentageArea").append("g").append("text")

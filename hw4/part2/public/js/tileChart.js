@@ -14,15 +14,12 @@ class TileChart {
       bottom: 30,
       left: 50
     };
-    //Gets access to the div element created for this chart and legend element from HTML
     let svgBounds = divTiles.node().getBoundingClientRect();
     this.svgWidth = svgBounds.width - this.margin.left - this.margin.right;
     this.svgHeight = this.svgWidth / 2;
     let legendHeight = 150;
-    //add the svg to the div
     let legend = d3.select("#legend").classed("content", true);
 
-    //creates svg elements within the div
     this.legendSvg = legend.append("svg")
       .attr("width", this.svgWidth)
       .attr("height", legendHeight)
@@ -59,7 +56,7 @@ class TileChart {
     text += "Electoral Votes: " + tooltip_data.electoralVotes;
     text += "<ul>"
     tooltip_data.result.forEach((row) => {
-      if (row.percentage == "" || row.percentage == 0){
+      if (row.percentage == "" || row.percentage == 0) {
         text += ""
       } else {
         //text += "<li>" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
@@ -83,45 +80,43 @@ class TileChart {
 
     let tip = d3.tip().attr('class', 'd3-tip')
       .direction('ne')
-      .offset(function() {
+      .offset(function () {
         return [-10, -20];
       })
       .html((d) => {
-         var state = {
-           state: d.State,
-           winner: d.State_Winner,
-           electoralVotes: d.Total_EV,
-           result: [{
-               "nominee": d.D_Nominee_prop,
-               "votecount": d.D_Votes,
-               "percentage":d.D_Percentage,
-               "party": "D"
-             },
-             {
-               "nominee": d.R_Nominee_prop,
-               "votecount": d.R_Votes,
-               "percentage": d.R_Percentage,
-               "party": "R"
-             },
-             {
-               "nominee": d.I_Nominee_prop,
-               "votecount": d.I_Votes,
-               "percentage": d.I_Percentage,
-               "party": "I"
-             }
-           ]
-         }
+        var state = {
+          state: d.State,
+          winner: d.State_Winner,
+          electoralVotes: d.Total_EV,
+          result: [{
+            "nominee": d.D_Nominee_prop,
+            "votecount": d.D_Votes,
+            "percentage": d.D_Percentage,
+            "party": "D"
+          },
+          {
+            "nominee": d.R_Nominee_prop,
+            "votecount": d.R_Votes,
+            "percentage": d.R_Percentage,
+            "party": "R"
+          },
+          {
+            "nominee": d.I_Nominee_prop,
+            "votecount": d.I_Votes,
+            "percentage": d.I_Percentage,
+            "party": "I"
+          }
+          ]
+        }
         return self.tooltip_render(state);
       });
 
     this.svg.call(tip);
-    //Calculates the maximum number of columns to be laid out on the svg
-    this.maxColumns = d3.max(electionResult, function(d) {
+    this.maxColumns = d3.max(electionResult, function (d) {
       return parseInt(d["Space"]);
     });
 
-    //Calculates the maximum number of rows to be laid out on the svg
-    this.maxRows = d3.max(electionResult, function(d) {
+    this.maxRows = d3.max(electionResult, function (d) {
       return parseInt(d["Row"]);
     });
     var w = this.svgWidth / (this.maxColumns + 1);
@@ -135,13 +130,13 @@ class TileChart {
     tile.append("rect")
       .attr("width", w)
       .attr("height", h)
-      .attr("x", function(d, i) {
+      .attr("x", function (d, i) {
         return d.Space * w;
       })
-      .attr("y", function(d, i) {
+      .attr("y", function (d, i) {
         return d.Row * h;
       })
-      .attr("fill", function(d) {
+      .attr("fill", function (d) {
         if (d["RD_Difference"] == 0) {
           return "green";
         } else {
@@ -153,31 +148,30 @@ class TileChart {
       .on('mouseout', tip.hide);
 
     tile.append("text")
-      .attr("x", function(d, i) {
+      .attr("x", function (d, i) {
         return d.Space * w + w / 2;
       })
-      .attr("y", function(d, i) {
-        return d.Row * h + h  * 2 /5;
+      .attr("y", function (d, i) {
+        return d.Row * h + h * 2 / 5;
       })
-      .text(function(d) {
+      .text(function (d) {
         return d.Abbreviation;
       })
       .classed("tilestext", true);
 
 
     tile.append("text")
-      .attr("x", function(d, i) {
+      .attr("x", function (d, i) {
         return d.Space * w + w / 2;
       })
-      .attr("y", function(d, i) {
+      .attr("y", function (d, i) {
         return d.Row * h + h * 4 / 5;
       })
-      .text(function(d) {
+      .text(function (d) {
         return d.Total_EV;
       })
       .classed("tilestext", true);
 
-    //Creates a legend element and assigns a scale that needs to be visualized
     this.legendSvg.append("g")
       .attr("class", "legendQuantile")
       .attr("transform", "translate(0,50)");
