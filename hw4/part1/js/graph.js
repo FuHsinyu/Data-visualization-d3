@@ -7,11 +7,9 @@ class Graph {
     this.actialData = allData;
   }
 
-  /**
-   * Render and update the graph based on the selection of the data type in the drop-down box
-   */
-  updateGraph() {
-    d3.selectAll("input[type = 'radio']").on("change", updateGraph);
+
+  GraphAction() {
+    d3.selectAll("input[type = 'radio']").on("change", GraphAction);
     d3.select("select").on("change", chooseData);
 
     var self = this;
@@ -32,7 +30,7 @@ class Graph {
       .data(self.nodes)
       .enter()
       .append("g")
-      .attr("class", "node")
+      .attr("class", "node");
 
     svg.selectAll(".node")
       .append("text")
@@ -46,10 +44,6 @@ class Graph {
     node.append("circle")
       .attr("r", 6)
       .attr("class", "node_circle")
-
-    /*  .attr("style", function(d) {
-        return "fill: " + foci[d.continent].color;
-      })*/;
 
     svg.selectAll(".node")
       .on("mouseover", function (d, i) {
@@ -126,7 +120,7 @@ class Graph {
         break;
       case "ring":
         d3.select("#ringBlock").attr("style", "display: block");
-        
+
         ringLayout();
         break;
     }

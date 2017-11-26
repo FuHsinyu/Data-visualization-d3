@@ -55,31 +55,31 @@ var force = d3.layout.force()
   .gravity(.5)
   .linkStrength(0)
   .on("tick", tick)
-  .on("start", function(d) {})
-  .on("end", function(d) {});
+  .on("start", function (d) { })
+  .on("end", function (d) { });
 
-d3.json("data/countries_1995_2012.json", function(allData) {
+d3.json("data/countries_1995_2012.json", function (allData) {
   data = allData;
   sortData(data, "population", 1);
   let nodes = initNodes(data);
   let links = initLinks(nodes);
 
   window.graph = new Graph(nodes, links, data);
-  graph.updateGraph();
+  graph.graphAction();
 
   for (var j = 0; j < graph.nodes.length; j++) {
     continentNodes[graph.nodes[j].continent].push(graph.nodes[j]);
   }
 });
 
-function updateGraph() {
+function graphAction() {
   graph.applyLayaut();
 }
 
 function initNodes(actualData) {
   let nb_nodes = actualData.length;
   let k = -1;
-  let nodes = d3.range(nb_nodes).map(function() {
+  let nodes = d3.range(nb_nodes).map(function () {
 
     k++;
 
@@ -137,7 +137,7 @@ function defaultScale() {
   var sortBy = d3.select("select").property('value');
   sortData(graph.nodes, sortBy, 1);
   var step = height / data.length;
-  graph.nodes.forEach(function(d, i) {
+  graph.nodes.forEach(function (d, i) {
     d.x = width / 2;
     d.y = step * i;
   });
@@ -149,7 +149,7 @@ function byValueScale() {
   var minAndMaxVal = getMaxAndMinValue(graph.nodes, selectedOption);
   var maxVal = minAndMaxVal[1];
   var minVal = minAndMaxVal[0]
-  graph.nodes.forEach(function(d, i) {
+  graph.nodes.forEach(function (d, i) {
     d.x = width / 2;
     d.y = (1 - d[selectedOption] / maxVal) * height;
   });
@@ -170,7 +170,7 @@ function twoDemisionLayout() {
 function populationGDPAxis() {
   var maxGDP = (getMaxAndMinValue(graph.nodes, "gdp"))[1];
   var maxPopulation = (getMaxAndMinValue(graph.nodes, "population"))[1];
-  graph.nodes.forEach(function(d, i) {
+  graph.nodes.forEach(function (d, i) {
     d.x = 50 + (d["gdp"] / maxGDP) * (width - 50);
     d.y = 50 + (1 - d["population"] / maxPopulation) * (height - 50);
   });
@@ -180,7 +180,7 @@ function populationGDPAxis() {
 function longitudeLatitudeAxis() {
   var minAndMaxLong = getMaxAndMinValue(graph.nodes, "longitude");
   var minAndMaxLat = getMaxAndMinValue(graph.nodes, "latitude");
-  graph.nodes.forEach(function(d, i) {
+  graph.nodes.forEach(function (d, i) {
     d.x = 50 + ((-minAndMaxLong[0] + d["longitude"]) / (minAndMaxLong[1] - minAndMaxLong[0])) * (width - 200);
     d.y = 50 + ((-minAndMaxLong[0] + d["latitude"]) / (minAndMaxLong[1] - minAndMaxLong[0])) * (height - 50);
   });
@@ -195,17 +195,17 @@ function tick(d) {
   var separationType = d3.select('input[name="circleRadio"]:checked').property("value");
 
   if (sepration && separationType == "horizonral") {
-    graph.nodes.forEach(function(o, i) {
+    graph.nodes.forEach(function (o, i) {
       o.y += (foci[o.continent].y_horizontal - o.y) * k;
       o.x += (foci[o.continent].x_horizontal - o.x) * k;
     });
   } else if (sepration && separationType == "pie") {
-    graph.nodes.forEach(function(o, i) {
+    graph.nodes.forEach(function (o, i) {
       o.y += (foci[o.continent].y_pie - o.y) * k;
       o.x += (foci[o.continent].x_pie - o.x) * k;
     });
   } else {
-    graph.nodes.forEach(function(o, i) {
+    graph.nodes.forEach(function (o, i) {
       o.y += (width / 4 - o.y) * k;
       o.x += (height / 4 - o.x) * k;
     });
@@ -227,17 +227,17 @@ function ringLayout() {
   var sortBy = d3.select('input[name="ringSortRadio"]:checked').property("value");
 
   var pie = d3.layout.pie()
-    .sort(function(a, b) {
+    .sort(function (a, b) {
       return a[sortBy] - b[sortBy];
     })
-    .value(function(d, i) {
+    .value(function (d, i) {
       return 1; // We want an equal pie share/slice for each point
     });
 
   if (!sepration) {
     var arc = d3.svg.arc()
       .outerRadius(Math.min(height, width) / 2);
-    graph.nodes = pie(graph.nodes).map(function(d, i) {
+    graph.nodes = pie(graph.nodes).map(function (d, i) {
       d.innerRadius = 0;
       d.outerRadius = Math.min(height, width) / 3;
       d.data.x = arc.centroid(d)[0] + width / 3;
@@ -252,7 +252,7 @@ function ringLayout() {
     var keys = Object.keys(continentNodes);
 
     for (var k = 0; k < keys.length; k++) {
-      pie(continentNodes[keys[k]]).map(function(d, i) {
+      pie(continentNodes[keys[k]]).map(function (d, i) {
         d.innerRadius = 0;
         d.outerRadius = Math.min(height, width) / 10;
         d.data.x = multArc.centroid(d)[0] + foci[keys[k]].x_pie;
@@ -266,22 +266,22 @@ function ringLayout() {
 }
 
 function graphUpdate(duration) {
-  d3.selectAll(".node").transition() 
-    .attr("transform", function(d) {
+  d3.selectAll(".node").transition()
+    .attr("transform", function (d) {
       return "translate(" + d.x + "," + d.y + ")";
     });
 
   d3.selectAll(".link").transition()
-    .attr("x1", function(d) {
+    .attr("x1", function (d) {
       return d.target.x;
     })
-    .attr("y1", function(d) {
+    .attr("y1", function (d) {
       return d.target.y;
     })
-    .attr("x2", function(d) {
+    .attr("x2", function (d) {
       return d.source.x;
     })
-    .attr("y2", function(d) {
+    .attr("y2", function (d) {
       return d.source.y;
     });
 }
@@ -335,7 +335,7 @@ function sortData(data, sortByParam, reverse) {
 function sortByKey(key, reverse) {
   var moveSmaller = reverse ? 1 : -1;
   var moveLarger = reverse ? -1 : 1;
-  return function(a, b) {
+  return function (a, b) {
     if (a[key] < b[key]) {
       return moveSmaller;
     }
