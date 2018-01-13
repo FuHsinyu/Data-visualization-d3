@@ -20,8 +20,8 @@ class ShiftChart {
     var data = [];
     for (var i = 0; i < selectedStates.length; i++) {
       var state = selectedStates[i][0].State;
-      if (state !== undefined) {
-        data.push(selectedStates[i][0].State);
+      if (state !== undefined){
+          data.push(selectedStates[i][0].State);
       }
     }
 
