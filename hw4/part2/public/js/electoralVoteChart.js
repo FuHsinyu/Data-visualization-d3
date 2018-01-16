@@ -15,12 +15,10 @@ class ElectoralVoteChart {
     };
     let divelectoralVotes = d3.select("#electoral-vote").classed("content", true);
 
-    //Gets access to the div element created for this chart from HTML
     this.svgBounds = divelectoralVotes.node().getBoundingClientRect();
     this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
     this.svgHeight = 150;
 
-    //creates svg element within the div
     this.svg = divelectoralVotes.append("svg")
       .attr("width", this.svgWidth)
       .attr("height", this.svgHeight)
@@ -83,10 +81,10 @@ class ElectoralVoteChart {
     }
 
     var sumOfVOtes = republicanVotes + democratVotes + independentVotes;
-    stateGroups["democrat"].sort(function(a, b) {
+    stateGroups["democrat"].sort(function (a, b) {
       return a.RD_Difference - b.RD_Difference;
     })
-    stateGroups["republican"].sort(function(a, b) {
+    stateGroups["republican"].sort(function (a, b) {
       return a.RD_Difference - b.RD_Difference;
     })
     var data = stateGroups["independent"].concat(stateGroups["democrat"].concat(stateGroups["republican"]));
@@ -102,10 +100,10 @@ class ElectoralVoteChart {
     var perc_so_far = 0;
 
     bar.append("rect")
-      .attr("width", function(d) {
+      .attr("width", function (d) {
         return ((d["Total_EV"] / sumOfVOtes) * 100) + "%";
       })
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         var prev_perc = perc_so_far;
         var this_perc = 100 * (d["Total_EV"] / sumOfVOtes);
         perc_so_far = perc_so_far + this_perc;
@@ -113,7 +111,7 @@ class ElectoralVoteChart {
       })
       .attr("height", 40)
       .attr("transform", "translate(50,50)")
-      .attr("fill", function(d) {
+      .attr("fill", function (d) {
         if (d["RD_Difference"] == 0) {
           return "green";
         } else {
@@ -140,14 +138,14 @@ class ElectoralVoteChart {
     var labelArea = this.svg.select("#barArea").append("g");
 
     labelArea.append("text")
-      .text("Electoral Vote (" + parseInt(sumOfVOtes / 2) + " needed to win)")
+      .text("Electoral Vote ")
       .attr("transform", "translate(" + (self.svgWidth / 2) + "," + 10 + ")")
       .classed("yeartext", true);
 
-    labelArea.append("text").text(function(d) {
-        return independentVotes == 0 ? "" : independentVotes;
-      })
-      .attr("x", function(d) {
+    labelArea.append("text").text(function (d) {
+      return independentVotes == 0 ? "" : independentVotes;
+    })
+      .attr("x", function (d) {
         prev = independentVotes;
         return 0 + "%";
       })
@@ -155,7 +153,7 @@ class ElectoralVoteChart {
       .classed("electoralVoteText", true);
 
     labelArea.append("text").text(democratVotes)
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         if (prev == 0) {
           return 0 + "%";
         }
@@ -165,7 +163,7 @@ class ElectoralVoteChart {
       .classed("electoralVoteText", true);
 
     labelArea.append("text").text(republicanVotes)
-      .attr("x", function(d) {
+      .attr("x", function (d) {
         return 89 + "%";
       })
       .attr("fill", "#de2d26")
@@ -175,10 +173,10 @@ class ElectoralVoteChart {
     this.svg.select("#barArea").attr("transform", "translate(0,60)");
 
     var brush = d3.brushX().extent([
-        [0, 0],
-        [self.svgWidth, 50]
-      ])
-      .on("end", function() {
+      [0, 0],
+      [self.svgWidth, 50]
+    ])
+      .on("end", function () {
         self.brushed();
       });
 
@@ -210,13 +208,13 @@ class ElectoralVoteChart {
       x1 = s[1];
     var selectedStates = [];
 
-    d3.select("#barArea").selectAll("rect").each(function(d, i) {
+    d3.select("#barArea").selectAll("rect").each(function (d, i) {
       var currectBarX = this.x.baseVal.value;
       var currectBarWidth = this.width.baseVal.value;
       var currentBarY = currectBarX + currectBarWidth;
       if ((s[0] >= currectBarX && s[0] <= currentBarY)
-      || (s[1] >= currectBarX && s[1] <= currentBarY)
-      || (currectBarX > s[0] && currectBarX < s[1])) {
+        || (s[1] >= currectBarX && s[1] <= currentBarY)
+        || (currectBarX > s[0] && currectBarX < s[1])) {
         selectedStates.push(d3.select(this).data());
       }
     });

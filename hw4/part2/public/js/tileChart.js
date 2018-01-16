@@ -59,7 +59,7 @@ class TileChart {
     text += "Electoral Votes: " + tooltip_data.electoralVotes;
     text += "<ul>"
     tooltip_data.result.forEach((row) => {
-      if (row.percentage == "" || row.percentage == 0){
+      if (row.percentage == "" || row.percentage == 0) {
         text += ""
       } else {
         //text += "<li>" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
@@ -79,117 +79,9 @@ class TileChart {
    */
   update(electionResult, colorScale) {
     d3.select("#tileArea").remove();
-    var self = this;
-
-    let tip = d3.tip().attr('class', 'd3-tip')
-      .direction('ne')
-      .offset(function() {
-        return [-10, -20];
-      })
-      .html((d) => {
-         var state = {
-           state: d.State,
-           winner: d.State_Winner,
-           electoralVotes: d.Total_EV,
-           result: [{
-               "nominee": d.D_Nominee_prop,
-               "votecount": d.D_Votes,
-               "percentage":d.D_Percentage,
-               "party": "D"
-             },
-             {
-               "nominee": d.R_Nominee_prop,
-               "votecount": d.R_Votes,
-               "percentage": d.R_Percentage,
-               "party": "R"
-             },
-             {
-               "nominee": d.I_Nominee_prop,
-               "votecount": d.I_Votes,
-               "percentage": d.I_Percentage,
-               "party": "I"
-             }
-           ]
-         }
-        return self.tooltip_render(state);
-      });
-
-    this.svg.call(tip);
-    //Calculates the maximum number of columns to be laid out on the svg
-    this.maxColumns = d3.max(electionResult, function(d) {
-      return parseInt(d["Space"]);
-    });
-
-    //Calculates the maximum number of rows to be laid out on the svg
-    this.maxRows = d3.max(electionResult, function(d) {
-      return parseInt(d["Row"]);
-    });
-    var w = this.svgWidth / (this.maxColumns + 1);
-    var h = this.svgHeight / (this.maxRows + 1);
-
-    this.svg.append("g").attr("id", "tileArea");
-    var tile = this.svg.select("#tileArea").selectAll("g")
-      .data(electionResult)
-      .enter().append("g");
-
-    tile.append("rect")
-      .attr("width", w)
-      .attr("height", h)
-      .attr("x", function(d, i) {
-        return d.Space * w;
-      })
-      .attr("y", function(d, i) {
-        return d.Row * h;
-      })
-      .attr("fill", function(d) {
-        if (d["RD_Difference"] == 0) {
-          return "green";
-        } else {
-          return (colorScale(d["RD_Difference"]));
-        }
-      })
-      .classed("tile", true)
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
-
-    tile.append("text")
-      .attr("x", function(d, i) {
-        return d.Space * w + w / 2;
-      })
-      .attr("y", function(d, i) {
-        return d.Row * h + h  * 2 /5;
-      })
-      .text(function(d) {
-        return d.Abbreviation;
-      })
-      .classed("tilestext", true);
 
 
-    tile.append("text")
-      .attr("x", function(d, i) {
-        return d.Space * w + w / 2;
-      })
-      .attr("y", function(d, i) {
-        return d.Row * h + h * 4 / 5;
-      })
-      .text(function(d) {
-        return d.Total_EV;
-      })
-      .classed("tilestext", true);
 
-    //Creates a legend element and assigns a scale that needs to be visualized
-    this.legendSvg.append("g")
-      .attr("class", "legendQuantile")
-      .attr("transform", "translate(0,50)");
-
-    let legendQuantile = d3.legendColor()
-      .shapeWidth(70)
-      .cells(10)
-      .orient('horizontal')
-      .scale(colorScale);
-
-    this.legendSvg.select(".legendQuantile")
-      .call(legendQuantile);
 
     //for reference:https://github.com/Caged/d3-tip
     //Use this tool tip element to handle any hover over the chart
