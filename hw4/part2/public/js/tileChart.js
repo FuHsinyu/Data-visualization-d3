@@ -54,22 +54,7 @@ class TileChart {
    * @param tooltip_data information that needs to be populated in the tool tip
    * @return text HTML content for tool tip
    */
-  tooltip_render(tooltip_data) {
-    let text = "<h2 class =" + this.chooseClass(tooltip_data.winner) + " >" + tooltip_data.state + "</h2>";
-    text += "Electoral Votes: " + tooltip_data.electoralVotes;
-    text += "<ul>"
-    tooltip_data.result.forEach((row) => {
-      if (row.percentage == "" || row.percentage == 0) {
-        text += ""
-      } else {
-        //text += "<li>" + row.nominee+":\t\t"+row.votecount+"("+row.percentage+"%)" + "</li>"
-        text += "<li class = " + this.chooseClass(row.party) + ">" + row.nominee + ":\t\t" + row.votecount + "(" + row.percentage + "%)" + "</li>"
-      }
-    });
-    text += "</ul>";
 
-    return text;
-  }
 
   /**
    * Creates tiles and tool tip for each state, legend for encoding the color scale information.
@@ -79,6 +64,8 @@ class TileChart {
    */
   update(electionResult, colorScale) {
     d3.select("#tileArea").remove();
+
+
 
 
 
