@@ -1,6 +1,6 @@
 ﻿**Name: Xinyu Fu**  
-**Email: hsinyu.fu@niuitmo.ru**  
-DATA VISULIZATION BY **JavaScript/D3.js**
+**Email: fuhsinyuxinyu@gmail.com**  
+Data visualization homeworks and project by **JavaScript**
 
 
 
