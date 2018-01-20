@@ -1,5 +1,5 @@
 ﻿**Name: Xinyu Fu**  
-**Email: 247047@niuitmo.ru**  
+**Email: hsinyu.fu@niuitmo.ru**  
 DATA VISULIZATION BY **JavaScript/D3.js**
 
 
