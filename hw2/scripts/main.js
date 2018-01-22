@@ -2,10 +2,11 @@ var rangeBar = document.getElementById("myRange");
 var year = document.getElementById("year");
 var newYear = 0;
 var data2 = [];
+var checkedContinents = [];
 
 function none() {
 
-    d3.json('countries_2012.json', function (error, data) {
+    d3.json('../countries_2012.json', function (error, data) {
         d3.selectAll('table').remove();
         tabulate(data, ['name', 'continent', 'gdp', 'life_expectancy', 'population', 'year'])
     });
@@ -14,7 +15,7 @@ function none() {
 
 function continentSort() {
 
-    d3.json('countries_2012.json', function (error, data) {
+    d3.json('../countries_2012.json', function (error, data) {
         var dataSet = d3.nest()
             .key(function (d) { return d.continent; })
             .rollup(function (d) {
@@ -43,20 +44,51 @@ function continentSort() {
     })
 
 }
-
+function getMaxYearMinYear(data) {
+    var maxyear = 2012;
+    var minyear = 2012;
+    for (var i = 0; i < data.length; i++) {
+        var currentYears = data[i].years;
+        for (var j = 0; j < currentYears.length; j++) {
+            var curruntYear = currentYears[j].year;
+            if (maxyear < curruntYear) {
+                maxyear = curruntYear;
+            }
+            if (minyear > curruntYear) {
+                minyear = curruntYear;
+            }
+        }
+    }
+    return [minyear, maxyear];
+}
+function getCheckedContinents() {
+    d3.selectAll("input[name='checkbox']").each(function () {
+        var currentContinent = d3.select(this);
+        if (currentContinent.property("checked")) {
+            if (checkedContinents.indexOf(currentContinent.attr("value")) < 0) {
+                checkedContinents.push(currentContinent.attr("value"));
+            }
+        } else {
+            var continentIndex = checkedContinents.indexOf(currentContinent.attr("value"));
+            if (continentIndex > -1) {
+                checkedContinents.splice(continentIndex, 1);
+            }
+        }
+    });
+}
 function continentSeparete() {
 
     options = [];
     d3.selectAll('.continent').each(function (d) {
-    singleContinent = d3.select(this);
+        singleContinent = d3.select(this);
         if (singleContinent.property('checked')) {
             options.push(singleContinent.property('value'));
         }
     });
-   
+
     d3.selectAll('table').remove();
-    d3.json('countries_2012.json', function (error, data) {
-        
+    d3.json('../countries_2012.json', function (error, data) {
+
         if (options.length > 0)
             data = data.filter(function (row) { return options.includes(row.continent) });
         else
@@ -67,14 +99,14 @@ function continentSeparete() {
 }
 
 
-function tabulate(data, columns) { // data formatting code quoted from internet not from GIST
+function tabulate(data, columns) { // data formatting code quoted from internet
 
     var table = d3.select('body').append('table')
     var thead = table.append('thead')
     var tbody = table.append('tbody');
     table.append('caption')
         .html('World Countries Ranking')
-    
+
     thead.append('tr')
         .selectAll('th')
         .data(columns).enter()
@@ -86,13 +118,13 @@ function tabulate(data, columns) { // data formatting code quoted from internet 
             })
         })
 
-   
+
     var rows = tbody.selectAll('tr')
         .data(data)
         .enter()
         .append('tr');
 
-    
+
     var formatComma = d3.format(",");
     var formatDecimal = d3.format(".1f");
     var cells = rows.selectAll('td')
