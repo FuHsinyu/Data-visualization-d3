@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualization - Homework 3 - Part 2 </title>
+    <link rel="stylesheet" href="styles_part2.css"/>
+    <script src="https://d3js.org/d3.v4.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <header>
+        <img src="assets/fifa_brazil_logo.jpg" alt="Brazil WC Russia Logo" id="logo"/>
+        <h1>Exploring Match Statistics for 2014 World Cup</h1>
+    </header>
+
+
+    <div class="view">
+        <h2>Score Table</h2>
+
+        <table id="matchTable">
+            <thead>
+            <tr id="colHeaders">
+                <td>Team</td>
+                <td style="text-align:center"> Goals <span class="glyphicon glyphicon-sort"></span><br/></td>
+                <td>Round/Result</td>
+                <td>Wins</td>
+                <td>Losses</td>
+                <td>Total Games</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="goalHeader"></td>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="view">
+
+
+        <h2>Second Stage</h2>
+        <svg id="treeSVG" width="800" height="1200">
+            <g id="tree"></g>
+        </svg>
+    </div>
+
+</div>
+<!--<script type="application/javascript" src="load_hacker.js"></script>-->
+<script type="application/javascript" src="js/tree.js"></script>
+<script type="application/javascript" src="js/table.js"></script>
+<script type="application/javascript" src="js/script_part2.js"></script>
+</body>
+</html>
