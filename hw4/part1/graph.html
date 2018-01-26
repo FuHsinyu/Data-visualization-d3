@@ -1,85 +1,81 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
 
 <head>
-    <meta charset="utf-8">
-    <title>Graph of HW4</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://d3js.org/d3.v4.js"></script>
-    <script src="js/graph.js" async></script>
-    <script src="js/script.js" async></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="styles/graph.css" />
+  <script src="js/graph.js" async></script>
+  <script src="js/mainAction.js" async></script>
 </head>
 
 <body>
-    <table>
-        <tbody>
-            <tr>
-                <td>
-                    <label class="input_box"> Groups:
-                        <input type="checkbox" class="input" id="fixed" autocomplete="off" checked> Sort
-                    </label>
-                </td>
-                <td>
-                </td>
-                <td>
-                    <label class="input_box">
-                        <input type="checkbox" class="input" id="group" autocomplete="off"> Continents
-                    </label>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Catogories:
-                        <input type="radio" name="layout" value="linear" checked="checked" class="input layout" autocomplete="off">Line</label>
-                </td>
-                <td>
-                    <label>
-                        <input type="radio" name="layout" value="scatterplot" class="input layout" autocomplete="off">Scatter</label>
-                </td>
-                <td>
-                    <label>
-                        <input type="radio" name="layout" value="circular" class="input layout" autocomplete="off">Circle</label>
-                </td>
-                <td>
-                    <label>
-                        <input type="radio" name="layout" value="force" class="input layout" autocomplete="off">Ball Force</label>
-                </td>
-            </tr>
-            <tr>
 
-                <td>
-                    <label for="type">Types:</label>
-                    <select class="input attribute" id="linear" autocomplete="off">
-                        <option value="gdp">GDP</option>
-                        <option value="population" selected>Population</option>
-                        <option value="life_expectancy">Life expectancy</option>
-                        <option value="longitude">Longitude</option>
-                        <option value="latitude">Latitude</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="input attribute" id="scatterplot" disabled autocomplete="off">
-                        <option value="population gdp" selected>GDP and Population</option>
-                        <option value="latitude longitude">Latitude and Longitude</option>
-                    </select>
-                </td>
-                <td>
-                    <select class="input attribute" id="circular" disabled autocomplete="off">
-                        <option value="gdp">GDP</option>
-                        <option value="population" selected>Population</option>
-                        <option value="life_expectancy">Life expectancy</option>
-                        <option value="longitude">Longitude</option>
-                        <option value="latitude">Latitude</option>
-                    </select>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="graph">
-    </div>
+  <div id = "layautBlock">
+
+    <label> Layaut:
+      <label> <input type = "radio" name = "layautRadio" value = "line" ></input> Line </label>
+      <label> <input type = "radio" name = "layautRadio" value = "2D"></input> Two axis </label>
+      <label> <input type = "radio" name = "layautRadio" value = "circle" checked></input> Circle </label>
+      <label> <input type = "radio" name = "layautRadio" value = "ring"></input> Ring </label>
+    </label>
+
+  </div>
+
+  <div id = "lineBlock" class = "optionBlock">
+
+    <label> Sort by:
+      <select id="valueTypeSelect">
+        <option value="gdp">GDP</option>
+        <option value="population" selected>Population</option>
+        <option value="life_expectancy">Life Expectancy</option>
+      </select>
+    </label>
+
+    <br>
+    <label> Scale:
+      <label> <input type = "radio" name = "scaleRadio" value = "default" checked></input> Default </label>
+      <label> <input type = "radio" name = "scaleRadio" value = "byValue"></input> By Value </label>
+    </label>
+
+  </div>
+
+  <div id = "twoDBlock"  class = "optionBlock">
+    <label> Axis:
+      <label> <input type = "radio" name = "axisRadio" value = "gdp_population" checked></input> GDP and Population </label>
+      <label> <input type = "radio" name = "axisRadio" value = "longitude_latitude"></input> Longitude and Latitude </label>
+    </label>
+  </div>
+
+  <div id = "circleBlock" class = "optionBlock">
+    <label> Separation Type:
+      <label> <input type = "radio" name = "circleRadio" value = "horizonral" checked></input> Horizonral </label>
+      <label> <input type = "radio" name = "circleRadio" value = "pie"></input> Pie </label>
+    </label>
+    <br>
+    <label> Separate by Continents
+       <input type = "checkbox" name="circleSeparation" onchange="updateGraph()"/>
+    </label>
+  </div>
+
+
+  <div id = "ringBlock" class = "optionBlock">
+    <label> Sort By:
+      <label> <input type = "radio" name = "ringSortRadio" value = "population" ></input> Population </label>
+      <label> <input type = "radio" name = "ringSortRadio" value = "gdp"></input> GDP </label>
+      <label> <input type = "radio" name = "ringSortRadio" value = "none" checked></input> None </label>
+    </label>
+    <br>
+    <label> Separate by Continents
+       <input type = "checkbox"  name="ringSeparation" onchange="updateGraph()"/>
+    </label>
+  </div>
+
+  <br>
+
+  <svg id="graphArea" width="1500" height="1900">
+           <g id="graph"></g>
+  </svg>
 </body>
 
 </html>

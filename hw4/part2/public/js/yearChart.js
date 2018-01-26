@@ -72,7 +72,7 @@ class YearChart {
     var self = this;
     var xScale = d3.scaleBand().range([0, self.svgWidth]);
 
-    xScale.domain(self.electionWinners.map(function (d) {
+    xScale.domain(self.electionWinners.map(function(d) {
       return d.YEAR;
     }));
 
@@ -81,7 +81,7 @@ class YearChart {
       .attr("class", "lineChart")
       .attr("transform", "translate(0, 50)")
       .call(d3.axisBottom(xScale).ticks(self.electionWinners.length)
-        .tickFormat(function (time) {
+        .tickFormat(function(time) {
           return time;
         })
       );
@@ -92,7 +92,7 @@ class YearChart {
     svg.selectAll("g")
       .append("circle")
       .attr("r", 20)
-      .attr("class", function (d) {
+      .attr("class", function(d) {
         for (var i = 0; i < self.electionWinners.length; i++) {
           if (self.electionWinners[i].YEAR == d) {
             break;
@@ -100,12 +100,18 @@ class YearChart {
         }
         return self.chooseClass(self.electionWinners[i].PARTY);
       })
-      .on("click", function (d) {
+      .on("mouseover", function(d) {
+        d3.select(this).classed("highlighted", true);
+      })
+      .on('mouseout', function(d) {
+        d3.selectAll("circle").classed("highlighted", false);
+      })
+      .on("click", function(d) {
         d3.selectAll("circle").classed("selected", false);
         d3.select(this).classed("selected", true);
         d3.selectAll(".brushed_state").remove();
 
-        d3.csv("data/Year_Timeline_" + d + ".csv", function (error, data) {
+        d3.csv("data/Year_Timeline_" + d + ".csv", function(error, data) {
           self.electoralVoteChart.update(data, self.colorScale);
           self.tileChart.update(data, self.colorScale);
           self.votePercentageChart.update(data, self.colorScale);
