@@ -86,7 +86,7 @@ class Tree {
 
     // adds the circle to the node
     node.append("circle")
-      .attr("r", 5)
+      .attr("r", 10)
       .style("fill", function (d) {
         if (d.data.data.WINS == 1) {
           return "blue";
@@ -118,8 +118,16 @@ class Tree {
   updateTree(row) {
     // ******* TODO: PART VII *******
 
-
-
+    var pathToHightlight = [];
+    treeData.each(function (d) {
+      if (d.data.TEAM == row.Team) {
+        pathToHightlight.push(d.id);
+      }
+    });
+    for (var k = 0; k < pathToHightlight.length; k++) {
+      d3.select("#ID" + pathToHightlight[k])
+        .classed("selected_link", true);
+    }
 
   }
 
