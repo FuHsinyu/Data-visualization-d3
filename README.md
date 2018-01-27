@@ -1,5 +1,5 @@
 ﻿# Auther Profile
-Name: Xinyu Fu
+Name: Xinyu Fu  
 Email: fuhsinyuxinyu@gmail.com
 # Discription
 ## Data visualization homeworks and project written by **JavaScript**
