@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+
+<head>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="../css/barChartStyle.css" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+
+<body>
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/chartAction.js"></script>
+  <label>
+    Time: 1995
+    <input type="range" name="range" step="1" id="slider-time" oninput=";">2012
+  </label>
+  <br>
+  <label>
+    Encodes Bars by:
+    <label>
+      <input type="radio" name="encodesBarRadio" value="Population" checked></input> Population </label>
+    <label>
+      <input type="radio" name="encodesBarRadio" value="GDP"></input> GDP </label>
+  </label>
+  <br>
+  <label>
+    Filter by:
+    <label>
+      <input type="checkbox" name="checkbox" value="Americas" title="Americas"> Americas</input>
+    </label>
+    <label>
+      <input type="checkbox" name="checkbox" value="Africa" title="Africa"> Africa </input>
+    </label>
+    <label>
+      <input type="checkbox" name="checkbox" value="Asia" title="Asia"> Asia </input>
+    </label>
+    <label>
+      <input type="checkbox" name="checkbox" value="Europe" title="Europe"> Europe </input>
+    </label>
+    <label>
+      <input type="checkbox" name="checkbox" value="Oceania" title="Oceania"> Oceania </input>
+    </label>
+  </label>
+  <br>
+  <label> Aggregate by:
+    <label>
+      <input type="radio" name="aggrRadio" value="Continent"></input> Continent </label>
+    <label>
+      <input type="radio" name="aggrRadio" value="Country" checked></input> Country </label>
+  </label>
+  <br>
+  <label> Sort by:
+    <label>
+      <input type="radio" name="sortRadio" value="Name" checked></input> Name </label>
+    <label>
+      <input type="radio" name="sortRadio" value="Population"></input> Population </label>
+    <label>
+      <input type="radio" name="sortRadio" value="GDP"></input> GDP </label>
+  </label>
+  <br>
+  <script type="text/javascript">
+    var margin = {
+      top: 50,
+      bottom: 10,
+      left: 300,
+      right: 40
+    };
+    var width = 900 - margin.left - margin.right;
+    var height = 900 - margin.top - margin.bottom;
+
+    var xScale = d3.scale.linear().range([0, width]);
+    var yScale = d3.scale.ordinal().rangeRoundBands([0, height], .8, 0);
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom);
+
+
+
+    d3.json("../countries_1995_2012.json", function (data) {
+      initBarPage(data);
+    });
+  </script>
+</body>
+
+</html>

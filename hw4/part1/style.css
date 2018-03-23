@@ -1,0 +1,27 @@
+.not_adjacent {
+    stroke-opacity: 0.1;
+}
+
+.node {
+    fill: white;
+    stroke: #000;
+    stroke-width: .9px;
+}
+
+.node:hover {
+    fill: black;
+}
+
+.input_box {
+    display: inline-block;
+}
+
+.link {
+    stroke: gray;
+    stroke-opacity: 0.4;
+    stroke-width: .8px;
+}
+
+.adjacent {
+    stroke-opacity: 1;
+}
