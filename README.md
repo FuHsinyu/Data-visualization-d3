@@ -4,7 +4,7 @@ Email: fuhsinyuxinyu@gmail.com
 # Discription
 ## Data visualization homeworks and project written by **JavaScript**
 * Project  
-Main: https://FuHsinyu.github.io/Game-Project/Metacritic-Visualization/games.html  
+Main: https://htmlpreview.github.io/?https://github.com/FuHsinyu/Data-visualization-d3/blob/master/Game-Project/Metacritic-Visualization/games.html   
 * HW4  
 part 1:https://FuHsinyu.github.io/hw4/part1/graph.html  
 part 2:https://FuHsinyu.github.io/hw4/part2/hw4.html  
